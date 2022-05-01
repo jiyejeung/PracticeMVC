@@ -13,8 +13,9 @@ keywordView.setup = (objElementArg) => {
 
 keywordView.render = (arrDataArg = []) => {
 	keywordView.objElementArg.innerHTML = arrDataArg.length ? keywordView.getKeywordsHtml(arrDataArg) : '추천 검색어가 없습니다.';
-  keywordView.bindClickEvent();
+	keywordView.bindClickEvent();
 	keywordView.show();
+	return keywordView;
 };
 
 keywordView.getKeywordsHtml = (arrDataArg) => {

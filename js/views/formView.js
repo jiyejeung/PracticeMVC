@@ -29,8 +29,8 @@ formView.onKeyup = (eventArg) => {
 	if (!formView.inputElement.value.length) {
 		formView.emit('@reset');
 	}
-	formView.emit('@submit', { input: formView.inputElement.value });
 	if (eventArg.keyCode !== 13) return;
+	formView.emit('@submit', { input: formView.inputElement.value });
 };
 
 formView.onClickReset = () => {
@@ -41,6 +41,6 @@ formView.onClickReset = () => {
 formView.setValue = (value = '') => {
 	formView.inputElement.value = value;
 	formView.showResetButton(true);
-}
+};
 
 export default formView;

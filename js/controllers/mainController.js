@@ -1,10 +1,14 @@
 'use strict';
 
 import formView from '../views/formView.js';
-import searchModel from '../models/searchModel.js';
 import tabView from '../views/tabView.js';
-import keywordView from '../views/keywordView.js';
+
+import searchModel from '../models/searchModel.js';
 import keywordModel from '../models/keywordModel.js';
+import historyModel from '../models/historyModel.js';
+
+import keywordView from '../views/keywordView.js';
+import historyView from '../views/historyView.js';
 import resultView from '../views/resultView.js';
 
 const tag = '[mainController]';
@@ -17,8 +21,11 @@ export default {
 			.on('@reset', () => this.onResetForm());
 		tabView.setup(document.querySelector('.ulContainer')).on('@change', (event) => this.onChangeTab(event.detail.tabName));
 		keywordView.setup(document.querySelector('.divSearchKeywordContainer')).on('@click', (event) => this.onClickKeyword(event.detail.keyword));
+		historyView
+			.setup(document.querySelector('.divSearchHistoryContainer'))
+			.on('@click', (event) => this.onClickHistory(event.detail.keyword))
+			.on('@remove', (event) => this.onRemoveHistory(event.detail.keyword));
 		resultView.setup(document.querySelector('.divSearchResultContainer'));
-
 		this.strSelectedTab = '추천 검색어';
 		this.renderView();
 	},
@@ -27,7 +34,10 @@ export default {
 		tabView.setActiveTab(this.strSelectedTab);
 		if (this.strSelectedTab === '추천 검색어') {
 			this.fetchSearchKeyword();
+			historyView.hide();
 		} else {
+			this.fetchSearchHistoryKeyword();
+			keywordView.hide();
 		}
 		resultView.hide();
 	},
@@ -38,6 +48,12 @@ export default {
 		});
 	},
 
+	fetchSearchHistoryKeyword() {
+		historyModel.list().then((data) => {
+			historyView.render(data).bindRemoveButton();
+		});
+	},
+
 	onSubmit(input) {
 		console.log(tag, 'onSubmit()', input);
 		this.search();
@@ -45,8 +61,8 @@ export default {
 
 	search(query) {
 		console.log(tag, 'search()', query);
-		// search API 요청
 		formView.setValue(query);
+		historyModel.add(query);
 		searchModel.list(query).then((arrDataArg) => this.onSearchResult(arrDataArg));
 	},
 
@@ -61,9 +77,21 @@ export default {
 		this.renderView();
 	},
 
-	onChangeTab(tabName) {},
+	onChangeTab(tabName) {
+		this.strSelectedTab = tabName;
+		this.renderView();
+	},
 
 	onClickKeyword(keyword) {
 		this.search(keyword);
+	},
+
+	onClickHistory(keyword) {
+		this.search(keyword);
+	},
+
+	onRemoveHistory(keyword) {
+		historyModel.remove(keyword);
+		this.renderView();
 	},
 };
