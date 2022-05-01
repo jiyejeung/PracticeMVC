@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(lang="ko")
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -10,4 +10,8 @@ html(lang="en")
     main.mainContainer 
       header.headerContainer 
         h2.h2Container SEARCH
+      section.sectionContainer 
+        form
+          input(type="text" placeholder="검색어를 입력하세요.")
+          button(type="reset").buttonReset x
     script(type="module" src="./js/app.js")

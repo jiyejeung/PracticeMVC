@@ -1,3 +1,5 @@
+'use strict';
+
 export default {
 	data: [
 		{ keyword: '검색기록2', date: '12.03' },
