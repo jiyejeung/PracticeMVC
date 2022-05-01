@@ -11,4 +11,12 @@ html,
 body {
   width: 100%;
   height: 100%;
+}
+
+.divResult {
+  width: 20vw;
+  height: 20vw;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }/*# sourceMappingURL=index.css.map */

@@ -26,9 +26,11 @@ formView.bindEvents = () => {
 
 formView.onKeyup = (eventArg) => {
 	formView.showResetButton(formView.inputElement.value.length);
-	if (!formView.inputElement.value.length) formView.emit('@reset')
-	if (eventArg.keyCode !== 13) return;
+	if (!formView.inputElement.value.length) {
+		formView.emit('@reset');
+	}
 	formView.emit('@submit', { input: formView.inputElement.value });
+	if (eventArg.keyCode !== 13) return;
 };
 
 formView.onClickReset = () => {
