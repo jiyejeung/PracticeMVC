@@ -7,14 +7,23 @@ const tag = '[formView]';
 const formView = Object.create(view);
 
 formView.setup = (objElementArg) => {
-	this.init(objElementArg);
-	this.inputElement = objElementArg.querySelector('[type=text]');
-	this.resetElement = objElementArg.querySelector('[type=reset');
-	this.showResetButton(false);
+	view.init(objElementArg);
+	formView.inputElement = objElementArg.querySelector('[type=text]');
+	formView.resetElement = objElementArg.querySelector('[type=reset');
+	formView.showResetButton(false);
+	formView.bindEvents();
 };
 
 formView.showResetButton = (boolArg = true) => {
-	this.resetElement.style.display = boolArg ? 'block' : 'none';
+	formView.resetElement.style.display = boolArg ? 'block' : 'none';
+};
+
+formView.bindEvents = () => {
+	formView.inputElement.addEventListener('keyup', (event) => formView.onKeyup(event));
+};
+
+formView.onKeyup = () => {
+	formView.showResetButton(formView.inputElement.value.length)
 };
 
 export default formView;
