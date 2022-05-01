@@ -1,8 +1,9 @@
 'use strict';
 
 import formView from '../views/formView.js';
-import resultView from '../views/resultView.js';
 import searchModel from '../models/searchModel.js';
+import tabView from '../views/tabView.js';
+import resultView from '../views/resultView.js';
 
 const tag = '[mainController]';
 
@@ -12,7 +13,16 @@ export default {
 			.setup(document.querySelector('form'))
 			.on('@submit', (eventArg) => this.onSubmit(eventArg.detail.input))
 			.on('@reset', () => this.onResetForm());
+		tabView.setup(document.querySelector('.ulContainer')).on('@change', (event) => this.onChangeTab(event.detail.tabName));
 		resultView.setup(document.querySelector('.divSearchResultContainer'));
+
+		this.strSelectedTab = '추천 검색어';
+		this.renderView();
+	},
+
+	renderView() {
+		tabView.setActiveTab(this.strSelectedTab);
+		resultView.hide();
 	},
 
 	onSubmit(input) {
@@ -33,5 +43,9 @@ export default {
 	onResetForm() {
 		console.log(tag, 'onResetForm()');
 		resultView.hide();
+	},
+
+	onChangeTab(tabName) {
+		debugger;
 	},
 };
