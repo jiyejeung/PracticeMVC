@@ -38,4 +38,9 @@ formView.onClickReset = () => {
 	formView.showResetButton(false);
 };
 
+formView.setValue = (value = '') => {
+	formView.inputElement.value = value;
+	formView.showResetButton(true);
+}
+
 export default formView;

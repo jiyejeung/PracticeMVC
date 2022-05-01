@@ -26,7 +26,7 @@ export default {
 	},
 
 	show() {
-		this.objElementArg.style.display = '';
+		this.objElementArg.style.display = 'block';
 		return this;
 	},
 };
